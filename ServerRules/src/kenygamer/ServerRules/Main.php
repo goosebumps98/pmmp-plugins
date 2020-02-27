@@ -27,9 +27,9 @@ use pocketmine\utils\TextFormat as TF;
 class Main extends PluginBase implements Listener{
   
   /** Plugin name */
-  const PLUGIN_NAME = "ServerRules";
+  const PLUGIN_NAME = "Asylum Laws";
   /** Plugin version */
-  const PLUGIN_VERSION = "2.0";
+  const PLUGIN_VERSION = "1.0";
   
   /**
    * @return void
@@ -68,7 +68,7 @@ class Main extends PluginBase implements Listener{
    * @return string
    */
   private function getPrefix(){
-    return TF::GREEN."[ServerRules]".TF::RESET;
+    return TF::GREEN."§l§5LAWS §4)) ".TF::RESET;
   }
   
   /**
@@ -80,8 +80,8 @@ class Main extends PluginBase implements Listener{
    * @return bool
    */
   public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
-    if($command->getName() === "rules"){
-      if(!$sender->hasPermission("rules.command")){
+    if($command->getName() === "laws"){
+      if(!$sender->hasPermission("laws.command")){
         $sender->sendMessage($this->getPrefix().TF::RED."You do not have permission to use this command.");
         return true;
       }
@@ -90,7 +90,7 @@ class Main extends PluginBase implements Listener{
         return true;
       }
       if(($pageRules = (int) $this->getConfig()->get("page-rules")) < 1){
-        $this->getLogger()->warning("Rules per page in config.yml is less than 1. Resetting to 1");
+        $this->getLogger()->warning("Law per page in config.yml is less than 1. Resetting to 1");
         $this->getConfig()->set("page-rules", 1);
         $this->getConfig()->save();
       } 
@@ -103,7 +103,7 @@ class Main extends PluginBase implements Listener{
         $sender->sendMessage($this->getPrefix().TF::RED." Page not found. Please use /rules for a list of rules.");
         return true;
       }
-      $sender->sendMessage(TF::WHITE."--- Showing rules page ".$page." of ".$totalPages." (/rules <page>) ---");
+      $sender->sendMessage(TF::WHITE."--- §l§4Laws Page");
       foreach($currPageRules as $rule){
         $sender->sendMessage(TF::DARK_GREEN."- ".TF::WHITE.$rule.TF::RESET);
       }
